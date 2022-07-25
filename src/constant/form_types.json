@@ -1,0 +1,18 @@
+{
+  "TEXT": "text",
+  "TEXTAREA": "textarea",
+  "CHECKBOX": "checkbox",
+  "SELECT": "select",
+  "AUTO_COMPLETE": "auto_complete",
+  "DATE": "date",
+  "PASSWORD": "password",
+  "NUMBER": "number",
+  "DATEPICKER": "datepicker",
+  "TIMEPICKER": "timepicker",
+  "FILES": "files",
+  "COLORPICKER": "color",
+  "RADIO": "radio",
+  "DIVIDER": "divider",
+  "LINK": "link",
+  "LABEL": "label"
+}
