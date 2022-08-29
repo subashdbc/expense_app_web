@@ -89,7 +89,7 @@ function getUserPaginatedData(props: any) {
   <div class="q-pa-md">
     <div class="row">
       <div class="col-6 text-left">
-        <q-btn color="primary" @click="addNewUser" glossy label="New" />
+        <!-- <q-btn color="primary" @click="addNewUser" glossy label="New" /> -->
       </div>
       <div class="col-6 text-right">
         <q-input filled v-model="state.search" label="Search" hide-hint>

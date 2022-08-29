@@ -87,7 +87,7 @@ const formProps = computed<any>(() => {
 
 async function getAllExpenses() {
   listLoading.value = true
-  const date = dayjs(module.monthFilter, 'MMM / YYYY').format('YYYY-MM-DD 23:59:59')
+  const date = dayjs(module.monthFilter, 'MMM / YYYY').format('YYYY-MM-DD 00:00:00')
   const results = await useApi.post(`/expenses/detailed_view/`, {date})
   const values = results.data
   const colors = Object.keys(availbleThemeColors);
@@ -118,6 +118,7 @@ async function saveFormHandler() {
     loading.value = true
     if (module.model) {
       module.model.amount = +module.model.amount
+      module.model.date = dayjs(module.model.date, 'YYYY-MM-DD').format('YYYY-MM-DD 23:00:00')
     }
     if (module.model.id) {
       await updateRecord(module.model)

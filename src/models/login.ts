@@ -4,8 +4,10 @@ export interface Login {
 }
 
 export interface RegiserUser {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
   gender: string
+  isactive: boolean
 }

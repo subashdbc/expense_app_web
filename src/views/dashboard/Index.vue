@@ -12,6 +12,7 @@ interface Widget {
   icon: string;
   color: string;
   amountAlias: string;
+  loading: boolean;
 }
 const expenseLoading = ref(false)
 const incomeloading = ref(false)
@@ -54,28 +55,28 @@ const module = reactive<any>({
 })
 
 const widgets = computed<Widget[]>(() => [{
-  name: 'Expense',
+  name: `<b><i>${dayjs().format('MMM')}</i></b> Expense`,
   icon: 'fa-solid fa-indian-rupee-sign',
   color: 'linear-gradient(180deg, #5a63d4, #1922ae)',
-  amountAlias: 'totalExp',
+  amountAlias: 'monthExp',
   loading: expenseLoading.value
 }, {
   name: 'Total expenses',
   icon: 'fa-solid fa-indian-rupee-sign',
   color: 'linear-gradient(180deg, #ed5cb6, #842d95)',
-  amountAlias: 'monthExp',
+  amountAlias: 'totalExp',
   loading: expenseLoading.value
 }, {
-  name: 'Income',
+  name: `<b><i>${dayjs().format('MMM')}</i></b> Income`,
   icon: 'fa-solid fa-indian-rupee-sign',
   color: 'linear-gradient(180deg, #59db5e, #1a7530)',
-  amountAlias: 'totalIncome',
+  amountAlias: 'monthIncome',
   loading: incomeloading.value
 }, {
   name: 'Total income',
   icon: 'fa-solid fa-indian-rupee-sign',
   color: 'linear-gradient(180deg, #3795be, #18506a)',
-  amountAlias: 'monthIncome',
+  amountAlias: 'totalIncome',
   loading: incomeloading.value
 }])
 Chart.register(...registerables);
@@ -102,11 +103,6 @@ const { doughnutChartProps, doughnutChartRef } = useDoughnutChart({
       scales: {
         y: {
           beginAtZero: true
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
         }
       }
     },
@@ -195,12 +191,12 @@ function subtractWeek() {
       <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" :class="`${$q.screen.lt.md ? 'q-mt-sm' : ''}`" v-for="widget in widgets" :key="widget.name">
         <q-card class="my-card text-left text-white q-ml-sm shadow-6" :style="{ 'background-image': widget.color }">
           <q-card-section>
-            <div class="text-h6">{{ widget.name }}</div>
+            <div class="text-h6" v-html="widget.name"></div>
             <div class="q-mt-xs text-right">
               <q-btn glossy :icon="widget.icon" class="text-subtitle1 border-class" />
               <q-btn glossy class="text-subtitle1 text-weight-bold">
                 <q-spinner :color="widget.color" v-if="widget.loading"/>
-                {{ module[widget.amountAlias] }}
+                {{ module[widget.amountAlias] || 0 }}
               </q-btn>
             </div>
           </q-card-section>

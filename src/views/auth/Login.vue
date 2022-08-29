@@ -41,11 +41,11 @@ function authenticateHandler() {
 
 <template>
   <img src="../../assets/wave.png" class="wave" alt="login-wave">
-  <div class="row" style="height: 90vh">
+  <div class="row" v-bind:style="$q.screen.lt.sm ? {'height': '60vh'} : {'height': '90vh'}">
     <div class="col-0 col-md-6 flex justify-center content-center">
       <img src="../../assets/login.svg" class="responsive" alt="login-image">
     </div>
-    <div v-bind:class="{'justify-center': $q.screen.md || $q.screen.sm ||$q.screen.xs}"
+    <div v-bind:class="{'justify-center': $q.screen.md || $q.screen.sm || $q.screen.xs}"
          class="col-12 col-md-6 flex content-center">
       <q-card square bordered v-bind:style="$q.screen.lt.sm ? {'width': '80%'} : {'width': '50%'}">
         <q-card-section>
@@ -57,7 +57,7 @@ function authenticateHandler() {
             <q-form class="q-gutter-md" ref="validateForm">
               <q-input square filled v-model="auth.email" :rules="$validate._required()" type="email" label="Email" />
               <q-input square filled v-model="auth.password"
-                :type="isPwd ? 'password' : 'text'"
+                :type="isPwd ? 'text' : 'password'"
                 @keypress.enter="authenticateHandler"
                 :rules="$validate._required()" type="password" label="Password">
                   <template v-slot:append>
@@ -74,7 +74,9 @@ function authenticateHandler() {
             <q-btn unelevated color="primary" :loading="loading" glossy size="lg" @click="authenticateHandler" class="full-width" label="Login" />
           </q-card-actions>
           <q-card-section class="text-center q-pa-none">
-            <p class="text-grey-6"></p>
+            <p class="text-grey-6 text-h6" @click="$router.push('/register')" style="cursor: pointer">
+              Register
+            </p>
           </q-card-section>
       </q-card>
     </div>

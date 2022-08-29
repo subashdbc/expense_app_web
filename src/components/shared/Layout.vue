@@ -30,7 +30,8 @@ import Modal from './DeleteModal.vue';
 
 
   const menus = computed<Menu[]>(() => {
-    return [{
+    const isSuperAdmin = userData.value.id === -100
+    const menuList = [{
       name: 'Dashboard',
       icon: 'fa-solid fa-chart-simple',
       path: '/dashboard'
@@ -55,6 +56,8 @@ import Modal from './DeleteModal.vue';
       icon: 'fa-solid fa-bell',
       path: '/reminders'
     }]
+    if (isSuperAdmin) return menuList
+    else return menuList.filter(x => x.path !== '/users')
   })
 
   function toggleLeftDrawer () {
@@ -101,7 +104,7 @@ import Modal from './DeleteModal.vue';
   <q-layout view="lHh Lpr lFr" class="main-toolbar">
     <template v-if="isLogged">
       <q-header class="bg-primary-tool text-black">
-        <q-toolbar elevated :style="`${$q.screen.lt.sm ? '' : 'margin-left: 15px !important;'}`">
+        <q-toolbar elevated :style="`${$q.screen.lt.sm || !leftDrawerOpen ? 'width: 100% !important;' : 'margin-left: 15px !important;width: 98.4% !important;'}`">
           <q-btn dense flat round icon="fa-solid fa-bars" @click="toggleLeftDrawer" />
           <q-toolbar-title>
             Expenses
@@ -154,8 +157,8 @@ import Modal from './DeleteModal.vue';
       </q-drawer>
     </template>
 
-    <q-page-container class="container" :class="$q.screen.lt.sm ? '' : 'q-pa-sm'">
-      <router-view class="margin-class" :class="$q.screen.lt.sm ? '' : 'q-ml-md q-mr-xs'"
+    <q-page-container class="container" :class="$q.screen.lt.sm || !leftDrawerOpen ? '' : 'q-pa-sm'">
+      <router-view class="margin-class" :class="$q.screen.lt.sm || !leftDrawerOpen ? '' : 'q-ml-md q-mr-xs'"
        :style="{ height: `${$q.screen.height - 83}px`, background: 'white', borderRadius: '20px', 'overflow-y': 'auto'}" />
       <modal></modal>
     </q-page-container>
@@ -166,7 +169,6 @@ import Modal from './DeleteModal.vue';
 .q-toolbar {
   min-height: 62px !important;
   padding: 0 10px !important;
-  width: 98.4% !important;
   background: #ffffff !important;
   border-radius: 13px;
   box-shadow: 0px 4px 1px 0px #d1d1cbb0;
@@ -198,5 +200,8 @@ import Modal from './DeleteModal.vue';
 }
 .margin-class {
   margin-top: 55px;
+}
+.q-layout {
+  overflow-y: auto;
 }
 </style>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCookies } from 'vue3-cookies';
 import Layout from './components/shared/Layout.vue';
+import ReloadPWA from "./components/ReloadPWA.vue";
 import { useAuthStore } from './store/auth.store';
 const { cookies } = useCookies();
 const authStore = useAuthStore()
@@ -16,6 +17,7 @@ if (authToken) {
 </script>
 
 <template>
+  <ReloadPWA />
   <Layout msg="Hello Vue 3 + TypeScript + Vite" />
 </template>
 

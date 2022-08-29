@@ -1,22 +1,23 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 import { reactive, ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
 import { useApi } from '../../api/axios_setting';
 import { Gender } from '../../enums/gender';
 import { RegiserUser } from '../../models/login';
+import router from '../../router';
 import { useAuthStore } from '../../store/auth.store';
 const auth = reactive<RegiserUser>({
+  name: '' as string,
   email: '' as string,
   password: '' as string,
   confirmPassword: '' as string,
-  gender: '' as string
+  gender: '' as string,
+  isactive: true as boolean
 })
 const validateForm = ref<any>(null)
 const $q = useQuasar()
-const authStore = useAuthStore()
-const router = useRouter()
 const isPwd = ref(false)
+const isConfirmPwd = ref(false)
 const loading = ref(false)
 
 const genderList = computed<any>(() => {
@@ -32,18 +33,33 @@ const genderList = computed<any>(() => {
   }]
 })
 
+const passwordRules = computed<any>(() => {
+  return [
+    (value: string) => !!value || 'Please type password.',
+    (value: string) => (value && value.length >= 6) || 'minimum 6 characters',
+  ]
+})
+const confirmPasswordRules = computed<any>(() => {
+  return [
+    (value: string) => !!value || 'type confirm password',
+      (value: string) => value === auth.password || 'The password confirmation does not match.',
+  ]
+})
+
 function addNewUser() {
   loading.value = true
   validateForm.value.validate().
     then(async (validated: boolean) => {
       if (validated) {
+        auth
         const data = await useApi.post('/users', auth)
         if (data) {
           $q.notify({
-          type: 'postive',
-          message: 'User has been created successfully!',
-          classes: 'glossy'
-        })
+            type: 'positive',
+            message: 'User has been created successfully!',
+            classes: 'glossy'
+          })
+          router.push('/login')
         }
       }
       else {
@@ -76,10 +92,11 @@ function addNewUser() {
         </q-card-section>
         <q-card-section class="q-mt-xl">
             <q-form class="q-gutter-md" ref="validateForm">
+              <q-input square filled v-model="auth.name" :rules="$validate._required()" type="text" label="Name" />
               <q-input square filled v-model="auth.email" :rules="$validate._required()" type="email" label="Email" />
               <q-input square filled v-model="auth.password"
-                :type="isPwd ? 'password' : 'text'"
-                :rules="$validate._required()" type="password" label="Password">
+                :type="isPwd ? 'text' : 'password'"
+                :rules="passwordRules" type="password" label="Password">
                   <template v-slot:append>
                     <q-icon size="xs"
                       :name="isPwd ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"
@@ -89,13 +106,13 @@ function addNewUser() {
                   </template>
               </q-input>
               <q-input square filled v-model="auth.confirmPassword"
-                :type="isPwd ? 'password' : 'text'"
-                :rules="$validate._required()" type="password" label="Password">
+                :type="isConfirmPwd ? 'text' : 'password'"
+                :rules="confirmPasswordRules" type="password" label="Confirm Password">
                   <template v-slot:append>
                     <q-icon size="xs"
-                      :name="isPwd ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"
+                      :name="isConfirmPwd ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"
                       class="cursor-pointer"
-                      @click="isPwd = !isPwd"
+                      @click="isConfirmPwd = !isConfirmPwd"
                     />
                   </template>
               </q-input>
@@ -105,7 +122,7 @@ function addNewUser() {
             </q-form>
           </q-card-section>
           <q-card-actions class="q-px-md">
-            <q-btn unelevated color="primary" :loading="loading" glossy size="lg" @click="addNewUser" class="full-width" label="Login" />
+            <q-btn unelevated color="primary" :loading="loading" glossy size="lg" @click="addNewUser" class="full-width" label="Register" />
           </q-card-actions>
           <q-card-section class="text-center q-pa-none">
             <p class="text-grey-6"></p>

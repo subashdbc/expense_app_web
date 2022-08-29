@@ -24,7 +24,11 @@ const routes: any = [{
     path: "/dashboard",
     name: "dashboard",
     component: () => import('../views/dashboard/Index.vue'),
-  }, , {
+  }, {
+    path: "/register",
+    name: "register",
+    component: () => import('../views/auth/Register.vue'),
+  }, {
     path: "/income",
     name: "income",
     component: () => import('../views/income/Index.vue'),
