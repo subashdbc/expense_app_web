@@ -7,10 +7,12 @@ const props = defineProps({
 })
 const isPwd = ref(false)
 const formValidation = ref<any>(null)
+const datePicker = ref<any>(null)
 
 defineExpose({
   formValidation,
 })
+
 </script>
 
 <template>
@@ -49,8 +51,12 @@ defineExpose({
             <q-input filled v-model="model[prop.model]" hide-bottom-space :label="prop.label" :rules="prop.rules ? prop.rules() : []">
               <template v-slot:append>
                 <q-icon name="fa-solid fa-calendar-day" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-date v-model="model[prop.model]" mask="YYYY-MM-DD" />
+                  <q-popup-proxy cover transition-show="scale" ref="datePicker" transition-hide="scale">
+                    <q-date v-model="model[prop.model]" mask="YYYY-MM-DD">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
                   </q-popup-proxy>
                 </q-icon>
               </template>

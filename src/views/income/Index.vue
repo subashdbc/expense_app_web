@@ -16,14 +16,15 @@ const columns: TableHeader[] = [
     field: 'amount',
     sortable: true
   },
-  { name: 'receivedOn', label: 'Received On', align: 'left', field: 'receivedOn' },
+  { name: 'receivedOn', label: 'Received On', align: 'left', field: 'receivedOn', sortable: true },
   { name: 'user', label: 'User', align: 'left', field: 'user' },
   { name: 'edit', label: '', align: 'left', field: 'edit' }
 ]
 const validateForm = ref<any>(null)
 const paginationObj = ref({
-  sortBy: 'desc',
-  descending: false,
+  order: {},
+  sortBy: 'asc',
+  descending: true,
   page: 1,
   rowsPerPage: 5,
   rowsNumber: 0
@@ -89,9 +90,12 @@ async function getAllIncomeHandler(props: any) {
   const paginated = props.pagination || paginationObj.value
   paginationObj.value.rowsPerPage = paginated.rowsPerPage
   const skip = paginated.rowsPerPage * (paginated.page - 1 || 0)
-  const { data } = await useApi.post('income/pagination', { relations: ['user'], skip, take: paginated.rowsPerPage })
+  const orderBy = paginated.sortBy === 'asc' || !paginated.sortBy ? {} : { [paginated.sortBy]: paginated.descending ? 'DESC' : 'ASC' }
+  const { data } = await useApi.post('income/pagination', { relations: ['user'], skip, order: orderBy, take: paginated.rowsPerPage })
   if (data) {
     paginationObj.value.page = paginated.page
+    paginationObj.value.sortBy = paginated.sortBy
+    paginationObj.value.descending = paginated.descending
     paginationObj.value.rowsNumber = data[1]
     state.data = data[0]
   }

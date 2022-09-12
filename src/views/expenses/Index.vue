@@ -52,6 +52,7 @@ const formProps = computed<any>(() => {
       model: 'date',
       type: constants.DATEPICKER,
       label: 'Date',
+      ref: 'datePicker',
       class: 'col-12'
     }, {
       model: 'categoryId',

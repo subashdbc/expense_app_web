@@ -195,7 +195,7 @@ import Modal from './DeleteModal.vue';
 }
 .q-item.q-router-link--active, .q-item--active {
   color: black;
-  background: #c3613a99;
+  background: #259f8099;
   border-radius: 9px;
 }
 .margin-class {

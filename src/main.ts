@@ -16,8 +16,8 @@ myApp.use(Quasar, {
   plugins: { Notify },
   config: {
     brand: {
-      primary: '#c3613a',
-      secondary: '#26A69A',
+      primary: '#259f80',
+      secondary: '#ab6965',
       accent: '#9C27B0',
       dark: '#121212',
       positive: '#21BA45',

@@ -30,7 +30,7 @@ if (authToken) {
   color: #2c3e50;
 }
 thead {
-  background: #ededed;
+  background: #20856c08;
   box-shadow: 1px 0px 8px 0px grey;
 }
 .q-table {

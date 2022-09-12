@@ -43,7 +43,7 @@ function authenticateHandler() {
   <img src="../../assets/wave.png" class="wave" alt="login-wave">
   <div class="row" v-bind:style="$q.screen.lt.sm ? {'height': '60vh'} : {'height': '90vh'}">
     <div class="col-0 col-md-6 flex justify-center content-center">
-      <img src="../../assets/login.svg" class="responsive" alt="login-image">
+      <img src="../../assets/saving.svg" class="responsive" alt="login-image">
     </div>
     <div v-bind:class="{'justify-center': $q.screen.md || $q.screen.sm || $q.screen.xs}"
          class="col-12 col-md-6 flex content-center">
@@ -71,11 +71,14 @@ function authenticateHandler() {
             </q-form>
           </q-card-section>
           <q-card-actions class="q-px-md">
-            <q-btn unelevated color="primary" :loading="loading" glossy size="lg" @click="authenticateHandler" class="full-width" label="Login" />
+            <q-btn unelevated color="primary" :loading="loading" glossy size="lg" @click="authenticateHandler" class="full-width" label="Login">
+              <q-icon size="xs" name="fa-solid fa-right-to-bracket" class="cursor-pointer q-ml-sm"/>
+            </q-btn>
           </q-card-actions>
           <q-card-section class="text-center q-pa-none">
             <p class="text-grey-6 text-h6" @click="$router.push('/register')" style="cursor: pointer">
               Register
+              <q-icon size="sm" name="fa-solid fa-user-plus" class="cursor-pointer q-ml-sm"/>
             </p>
           </q-card-section>
       </q-card>

@@ -80,7 +80,7 @@ function addNewUser() {
   <img src="../../assets/wave.png" class="wave" alt="login-wave">
   <div class="row" style="height: 90vh">
     <div class="col-0 col-md-6 flex justify-center content-center">
-      <img src="../../assets/login.svg" class="responsive" alt="login-image">
+      <img src="../../assets/saving.svg" class="responsive" alt="login-image">
     </div>
     <div v-bind:class="{'justify-center': $q.screen.md || $q.screen.sm ||$q.screen.xs}"
          class="col-12 col-md-6 flex content-center">
@@ -122,7 +122,9 @@ function addNewUser() {
             </q-form>
           </q-card-section>
           <q-card-actions class="q-px-md">
-            <q-btn unelevated color="primary" :loading="loading" glossy size="lg" @click="addNewUser" class="full-width" label="Register" />
+            <q-btn unelevated color="primary" :loading="loading" glossy size="lg" @click="addNewUser" class="full-width" label="Register">
+              <q-icon size="xs" name="fa-solid fa-right-to-bracket" class="cursor-pointer q-ml-sm"/>
+            </q-btn>
           </q-card-actions>
           <q-card-section class="text-center q-pa-none">
             <p class="text-grey-6"></p>
